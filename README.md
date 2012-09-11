@@ -1,4 +1,0 @@
-AradonAlone
-===========
-
-Aradon StandAlone
