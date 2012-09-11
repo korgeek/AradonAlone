@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="builder_for_aradon_alone" default="builder_end">
+	<property name="module.name" value="aradon_alone" />
+	<property name="build_num" value="0.7" />
+	<property name="build.dir" value="build" />
+	<property name="conf.dir" value="conf" />
+	<property name="wrapper.dir" value="wrapper" />
+	<property name="publish.dir" value="publish" />
+	<property name="bin.common.dir" value="bin/common" />
+	<property name="bin.dir" value="bin" />
+	
+	<target name="prepare">
+		<tstamp>
+			<format property="DSTAMP" pattern="yyyy-MM-dd" />
+			<format property="TSTAMP" pattern="HH:mm" />
+		</tstamp>
+		<echo message="${module.name}, Build started at : ${DSTAMP}-${TSTAMP}" />
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${publish.dir}" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}/app_lib" />
+	</target>
+
+	<target name="make_jar" depends="init">
+		<delete file="${build.dir}/app_lib/${module.name}_${build_num}.jar" />
+ 		<jar destfile="${build.dir}/app_lib/${module.name}_${build_num}.jar" basedir="${bin.dir}" />
+	</target>
+
+	<target name="copy_wrapper" depends="make_jar">
+		<copy todir="${build.dir}/conf">
+			<fileset dir="${wrapper.dir}/conf">
+				<include name="**//wrapper.conf"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/conf">
+			<fileset dir="${conf.dir}">
+				<include name="aradon-config.xml"/>
+			</fileset>
+		</copy>
+		<mkdir dir="${build.dir}/deploy"/>
+		<copy todir="${build.dir}/bin"><fileset dir="${wrapper.dir}/bin"/></copy>
+		<copy todir="${build.dir}/lib"><fileset dir="${wrapper.dir}/lib"/></copy>
+		<copy todir="${build.dir}/logs"><fileset dir="${wrapper.dir}/logs"/></copy>
+		<copy todir="${build.dir}/app_lib"><fileset dir="lib"/></copy>
+	</target>
+
+	<target name="make_alone_zip" depends="copy_wrapper">	
+		<delete file="${publish.dir}/${module.name}_${build_num}.zip" />
+        <zip destfile="${publish.dir}/${module.name}_${build_num}.zip"><fileset dir="${build.dir}"/></zip>
+    </target>
+	
+	<target name="builder_end" depends="make_alone_zip">
+		<delete includeEmptyDirs="true"><fileset dir="${build.dir}" /></delete>
+	</target>
+
+</project>
