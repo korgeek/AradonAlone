@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="builder_for_aradon_alone" default="builder_end">
 	<property name="module.name" value="aradon_alone" />
-	<property name="build_num" value="0.7" />
+	<property name="build_num" value="0.9" />
 	<property name="build.dir" value="build" />
 	<property name="conf.dir" value="conf" />
 	<property name="wrapper.dir" value="wrapper" />

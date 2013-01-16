@@ -30,11 +30,8 @@
 		</path>
 	</section>
 
-	<plugin home="../deploy/"></plugin>
-	
-	<server-config id="mercury">
-		<!-- System.setProperty("java.util.logging.config.file", "./resource/config/myLogging.properties") ; -->
-		<log-config-file>../conf/log4j.properties</log-config-file>
+	<plugin home="../plugin/"></plugin>
+	<server-config>
 		<connector-config engine="simple">
 			<parameter name="minThreads" description="Minimum threads waiting to service requests." >5</parameter> 
 			<parameter name="maxThreads" description="Maximum threads that will service requests." >255</parameter> 
@@ -45,22 +42,12 @@
 			<parameter name="acceptQueueSize" description="Size of the accept queue." >0</parameter>
 			<parameter name="requestHeaderSize" description="Size of the buffer to be used for request headers." >4096</parameter>
 			<parameter name="responseHeaderSize" description="Size of the buffer to be used for response headers." >4096</parameter>
-			<parameter name="requestBufferSize" description="Size of the content buffer for receiving requests." >4096</parameter>
-			<parameter name="responseBufferSize" description="Size of the content buffer for sending responses." >8192</parameter>
+			<parameter name="requestBufferSize" description="Size of the content buffer for receiving requests." >8192</parameter>
+			<parameter name="responseBufferSize" description="Size of the content buffer for sending responses." >32768</parameter>
 			<parameter name="ioMaxIdleTimeMs" description="Maximum time to wait on an idle IO operation." >30000</parameter>
 			<parameter name="soLingerTime" description="SO linger time (see Jetty documentation)." >1000</parameter>
 			<parameter name="gracefulShutdown" description="The time (in ms) to wait for existing requests to complete before fully stopping the server." >500</parameter>
-
-		<!-- 
-		// if use netty
-		<connector-config engine="simple" port="8183" protocol="https">
-			<parameter name="defaultThreads" description="Default number of polling threads for a handler object." >20</parameter>
-			<parameter name="maxWaitTimeMs" description="Maximum waiting time between polls of the input." >200</parameter>
-			<parameter name="sslContextFactory" description="Let you specify a SslContextFactory qualified class name as a parameter, or an instance as an attribute for a more complete and flexible SSL context setting." >rg.restlet.ext.ssl.DefaultSslContextFactory</parameter>
-		-->>
 		</connector-config>
-		
-		
-		<manage-port auto-start="false">6868</manage-port>
+		<manage-port auto-start="false">4567</manage-port>
 	</server-config>
 </root>
